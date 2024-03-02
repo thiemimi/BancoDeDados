@@ -1,0 +1,90 @@
+set SERVEROUTPUT on;
+
+    declare
+        numero number := &valor;
+
+    begin
+        if numero < 0 then
+            dbms_output.put_line('O número '|| numero ||' informado é negativo');
+        else
+            dbms_output.put_line('O valor '|| numero ||' informado é positivo');
+        end if;
+    end;
+    
+    declare
+        numero number := &valor;
+
+    begin
+
+        if MOD (numero, 2) = 0 then
+            dbms_output.put_line('O número '|| numero ||' informado é par');
+        else
+            dbms_output.put_line('O valor '|| numero ||' informado é impar');
+		end if;
+    end;
+    
+    declare
+        genero varchar2(1) := '&genero';
+
+    begin
+        if upper(genero) = 'M' then
+            dbms_output.put_line('O gênero informado é Masculino');
+        elsif upper(genero) = 'F' then
+            dbms_output.put_line('O gênero informado é Feminino');
+        else
+            dbms_output.put_line('Outro');    
+        end if;
+    end;
+    
+    SELECT * FROM PRODUTOS_DE_VENDAS;
+    SELECT DISTINCT DEALSIZE FROM PRODUTOS_DE_VENDAS;
+
+    BEGIN
+        FOR X IN (SELECT DISTINCT DEALSIZE FROM PRODUTOS_DE_VENDAS) LOOP
+        
+        DBMS_OUTPUT.PUT_LINE(X.DEALSIZE);
+        
+        END LOOP;
+    END;
+    
+    BEGIN
+        FOR X IN 1 .. 10 LOOP
+        DBMS_OUTPUT.PUT_LINE(X*10);
+        END LOOP;
+    END;
+    
+    SELECT * FROM PRODUTOS_DE_VENDAS;
+
+    SELECT DISTINCT DEALSIZE, CUSTOMERNAME FROM PRODUTOS_DE_VENDAS;
+
+    BEGIN
+        FOR X IN (SELECT DISTINCT DEALSIZE, CUSTOMERNAME FROM PRODUTOS_DE_VENDAS) LOOP
+            -- DBMS_OUTPUT.PUT_LINE(X.DEALSIZE);
+            IF X.DEALSIZE = 'Small' THEN
+             DBMS_OUTPUT.PUT_LINE(X.CUSTOMERNAME ||'EMPRESA DE PEQUENO PORTE');
+            ELSIF X.DEALSIZE = 'Large' THEN
+                DBMS_OUTPUT.PUT_LINE(X.CUSTOMERNAME ||'EMPRESA DE GRANDE PORTE');
+            ELSIF X.DEALSIZE = 'Medium' THEN
+                DBMS_OUTPUT.PUT_LINE(X.CUSTOMERNAME ||'EMPRESA DE MÉDIO PORTE');
+            END IF;
+        END LOOP;
+    END;
+    
+    DECLARE
+        VALOR_AQUISICAO NUMBER := 10000;
+        QTD_PARCELAS NUMBER := &PARCELA;
+        VALOR_PARCELA NUMBER;
+
+    BEGIN
+        IF QTD_PARCELAS = 6 THEN
+            DBMS_OUTPUT.PUT_LINE('PAGAMENTO EM 6 PARCELAS: ' || ((0.8*VALOR_AQUISICAO)*1.1)/6 || ' R$ CADA PARCELA');
+        ELSIF QTD_PARCELAS = 12 THEN
+            DBMS_OUTPUT.PUT_LINE('PAGAMENTO EM 12 PARCELAS: ' ||((0.8*VALOR_AQUISICAO)*1.15)/12 || ' R$ CADA PARCELA');
+        ELSIF QTD_PARCELAS = 18 THEN
+            DBMS_OUTPUT.PUT_LINE('PAGAMENTO EM 18 PARCELAS: ' ||((0.8*VALOR_AQUISICAO)*1.2)/18 || ' R$ CADA PARCELA');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('NÃO É POSSÍVEL PAGAR COM ESSA QUANTIDADE DE PARCELAS');
+        END IF;
+    END;
+    
+    
